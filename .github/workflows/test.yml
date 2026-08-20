@@ -1,4 +1,4 @@
-name: Meu primeiro workflow
+name: Testar aplicação
 
 on:
   push:
@@ -15,8 +15,21 @@ jobs:
       - name: Baixar o código
         uses: actions/checkout@v4
 
-      - name: Mostrar mensagem
-        run: echo "Olá! Meu primeiro GitHub Actions!"
+      - name: Verificar Docker
+        run: docker --version
 
-      - name: Mostrar arquivos
-        run: ls -la
+      - name: Construir imagem
+        run: docker build -t meu-site .
+
+      - name: Executar container
+        run: |
+          docker run -d \
+            --name meu-site \
+            -p 8080:80 \
+            meu-site
+
+      - name: Testar Nginx
+        run: curl http://localhost:8080
+
+      - name: Parar container
+        run: docker stop meu-site
