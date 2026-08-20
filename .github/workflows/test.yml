@@ -25,7 +25,7 @@ jobs:
         run: |
           docker run -d \
             --name meu-site \
-            -p 8080:80 \
+            -p 80:80 \
             meu-site
 
       - name: Testar Nginx
